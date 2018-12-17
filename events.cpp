@@ -33,107 +33,117 @@ bool EventReceiver::keyboard(const SEvent &event)
 
   if (event.KeyInput.PressedDown)
   {
-    ic::vector3df position = node->getPosition();
-    ic::vector3df rotation = node->getRotation();
-
-    switch (event.KeyInput.Key)
+    if(Fenetres_visible[0] || Fenetres_visible[1] || Fenetres_visible[2] || Fenetres_visible[3] || Fenetres_visible[4] || Fenetres_visible[5])
     {
-      case KEY_ESCAPE:
-        exit(0);
-    case KEY_UP: // Avance
-      if  (position.X < -215 || position.X > 380) //coordonnés des portes dans les chambres annexes
-      {
-          if(position.Z > 35 || position.X < -620) //position des bords
-          {
-              position.X += 0.5;  //evite de tomber dans le vide
-              position.Z += -0.5;
-          }
-          else if (position.Z < -150)//position des bords
-          {
-              position.Z += 0.5;
-          }
-          else if (position.X > 727) //position des bords
-          {
-              position.X += -0.5;
-          }
-          else
-          {
-              position.X += 2 * cos(rotation.Y * M_PI / 180.0);
-              position.Z += -2 * sin(rotation.Y * M_PI / 180.0);
-              isMoving +=1;
-          }
-      }
-      else
-      {
-          if (position.Z > 130) //Ne s'echappe pas par les escaliers
-          {
-              position.Z += -0.5;
-
-          }
-          else if (position.Z < -260) //Ne s'echappe pas par les escaliers
-          {
-              position.Z += 0.5;
-          }
-          else
-          {
-              position.X += 2 * cos(rotation.Y * M_PI / 180.0);
-              position.Z += -2 * sin(rotation.Y * M_PI / 180.0);
-              isMoving +=1;
-          }
-
-      }
-      break;
-    case KEY_DOWN: // Recule
-      if  (position.X < -215 || position.X > 380)//condition pour ne pas tomber dans les chambres annexes
-      {
-          if(position.Z > 35 || position.X < -620)
-          {
-              position.X += 0.5;
-              position.Z += -0.5;
-          }
-          else if (position.Z < -150)
-          {
-              position.Z += 0.5;
-          }
-          else if (position.X > 727)
-          {
-              position.X += -0.5;
-          }
-          else
-          {
-              position.X += -1 * cos(rotation.Y * M_PI / 180.0);
-              position.Z += 1 * sin(rotation.Y * M_PI / 180.0);
-              isMoving +=1;
-          }
-      }
-      else
-      {
-          if (position.Z > 130)
-          {
-              position.Z += -0.5;
-          }
-          else if (position.Z < -260)
-          {
-              position.Z += 0.5;
-          }
-          else
-          {
-              position.X += -1 * cos(rotation.Y * M_PI / 180.0);
-              position.Z += 1 * sin(rotation.Y * M_PI / 180.0);
-              isMoving +=1;
-          }
-      }
-      break;
-      case KEY_RIGHT: // Tourne à droite
-        rotation.Y += 10;
-        break;
-      case KEY_LEFT: // Tourne à gauche
-        rotation.Y -= 10;
-        break;
-      default:;
+        ic::vector3df position = node->getPosition();
+        ic::vector3df rotation = node->getRotation();
+        node->setPosition(position);
+        node->setRotation(rotation);
     }
-    node->setPosition(position);
-    node->setRotation(rotation);
+    else
+    {
+        ic::vector3df position = node->getPosition();
+        ic::vector3df rotation = node->getRotation();
+
+        switch (event.KeyInput.Key)
+        {
+          case KEY_ESCAPE:
+            exit(0);
+        case KEY_UP: // Avance
+          if  (position.X < -215 || position.X > 380) //coordonnés des portes dans les chambres annexes
+          {
+              if(position.Z > 35 || position.X < -620) //position des bords
+              {
+                  position.X += 0.5;  //evite de tomber dans le vide
+                  position.Z += -0.5;
+              }
+              else if (position.Z < -150)//position des bords
+              {
+                  position.Z += 0.5;
+              }
+              else if (position.X > 727) //position des bords
+              {
+                  position.X += -0.5;
+              }
+              else
+              {
+                  position.X += 2 * cos(rotation.Y * M_PI / 180.0);
+                  position.Z += -2 * sin(rotation.Y * M_PI / 180.0);
+                  isMoving +=1;
+              }
+          }
+          else
+          {
+              if (position.Z > 130) //Ne s'echappe pas par les escaliers
+              {
+                  position.Z += -0.5;
+
+              }
+              else if (position.Z < -260) //Ne s'echappe pas par les escaliers
+              {
+                  position.Z += 0.5;
+              }
+              else
+              {
+                  position.X += 2 * cos(rotation.Y * M_PI / 180.0);
+                  position.Z += -2 * sin(rotation.Y * M_PI / 180.0);
+                  isMoving +=1;
+              }
+
+          }
+          break;
+        case KEY_DOWN: // Recule
+          if  (position.X < -215 || position.X > 380)//condition pour ne pas tomber dans les chambres annexes
+          {
+              if(position.Z > 35 || position.X < -620)
+              {
+                  position.X += 0.5;
+                  position.Z += -0.5;
+              }
+              else if (position.Z < -150)
+              {
+                  position.Z += 0.5;
+              }
+              else if (position.X > 727)
+              {
+                  position.X += -0.5;
+              }
+              else
+              {
+                  position.X += -1 * cos(rotation.Y * M_PI / 180.0);
+                  position.Z += 1 * sin(rotation.Y * M_PI / 180.0);
+                  isMoving +=1;
+              }
+          }
+          else
+          {
+              if (position.Z > 130)
+              {
+                  position.Z += -0.5;
+              }
+              else if (position.Z < -260)
+              {
+                  position.Z += 0.5;
+              }
+              else
+              {
+                  position.X += -1 * cos(rotation.Y * M_PI / 180.0);
+                  position.Z += 1 * sin(rotation.Y * M_PI / 180.0);
+                  isMoving +=1;
+              }
+          }
+          break;
+          case KEY_RIGHT: // Tourne à droite
+            rotation.Y += 10;
+            break;
+          case KEY_LEFT: // Tourne à gauche
+            rotation.Y -= 10;
+            break;
+          default:;
+        }
+        node->setPosition(position);
+        node->setRotation(rotation);
+    }
 
   }
   if (!event.KeyInput.PressedDown)
