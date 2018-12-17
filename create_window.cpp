@@ -26,12 +26,12 @@ ig::IGUIWindow * create_window(ig::IGUIEnvironment *gui,const wchar_t *Question,
 
   // Question
 
-  gui->addStaticText(Question, ic::rect<s32>(22,48, 560,460), false, false, window);//(22,48, 65,66)
+  gui->addStaticText(Question, ic::rect<s32>(70,30, 430,120), false, false, window);//(22,48, 65,66)
   // Réponses
-  gui->addButton(ic::rect<s32>(70,100, 170,150), window, WINDOW_BUTTON_1, Answers_1); //(40,74, 140,92)
-  gui->addButton(ic::rect<s32>(300,100, 400,150), window, WINDOW_BUTTON_2, Answers_2);
-  gui->addButton(ic::rect<s32>(70,200, 170,250), window, WINDOW_BUTTON_3, Answers_3);
-  gui->addButton(ic::rect<s32>(300,200, 400,250), window, WINDOW_BUTTON_4, Answers_4);
+  gui->addButton(ic::rect<s32>(60,130, 200,180), window, WINDOW_BUTTON_1, Answers_1); //(40,74, 140,92)
+  gui->addButton(ic::rect<s32>(290,130, 430,180), window, WINDOW_BUTTON_2, Answers_2);
+  gui->addButton(ic::rect<s32>(60,230, 200,280), window, WINDOW_BUTTON_3, Answers_3);
+  gui->addButton(ic::rect<s32>(290,230, 430,280), window, WINDOW_BUTTON_4, Answers_4);
 
   window->setVisible(false);
 

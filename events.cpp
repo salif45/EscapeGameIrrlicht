@@ -58,8 +58,8 @@ bool EventReceiver::keyboard(const SEvent &event)
           }
           else
           {
-              position.X += 1 * cos(rotation.Y * M_PI / 180.0);
-              position.Z += -1 * sin(rotation.Y * M_PI / 180.0);
+              position.X += 2 * cos(rotation.Y * M_PI / 180.0);
+              position.Z += -2 * sin(rotation.Y * M_PI / 180.0);
               isMoving +=1;
           }
       }
@@ -76,8 +76,8 @@ bool EventReceiver::keyboard(const SEvent &event)
           }
           else
           {
-              position.X += 1 * cos(rotation.Y * M_PI / 180.0);
-              position.Z += -1 * sin(rotation.Y * M_PI / 180.0);
+              position.X += 2 * cos(rotation.Y * M_PI / 180.0);
+              position.Z += -2 * sin(rotation.Y * M_PI / 180.0);
               isMoving +=1;
           }
 
@@ -212,10 +212,12 @@ bool EventReceiver::gui_handler(const SEvent &event)
         if (id == WINDOW_BUTTON_1)
         {
             std::cout <<"id:"<<id<< "Button clicked\n";
-            if (Qmarks_visible[5])
+            if (Fenetres_visible[5])
             {
                 std::cout <<"Bonne réponse"<<std::endl;
-                Qmarks_visible[5] = false;
+                Fenetres_visible[5] = false;
+                Qmarks[5] -> setVisible(false);
+                Windows[5] -> setVisible(false);
 
             }
         }
@@ -223,16 +225,20 @@ bool EventReceiver::gui_handler(const SEvent &event)
         if (id == WINDOW_BUTTON_2)
         {
             std::cout <<"id:"<<id<< "Button clicked\n";
-            if (Qmarks_visible[1])
+            if (Fenetres_visible[1])
             {
                 std::cout <<"Bonne réponse"<<std::endl;
-                Qmarks_visible[1] = false;
+                Fenetres_visible[1] = false;
+                Qmarks[1] -> setVisible(false);
+                Windows[1] -> setVisible(false);
 
             }
-            else if (Qmarks_visible[4])
+            else if (Fenetres_visible[4])
             {
                 std::cout <<"Bonne réponse"<<std::endl;
-                Qmarks_visible[4] = false;
+                Fenetres_visible[4] = false;
+                Qmarks[4] -> setVisible(false);
+                Windows[4] -> setVisible(false);
 
             }
 
@@ -241,10 +247,12 @@ bool EventReceiver::gui_handler(const SEvent &event)
         if (id == WINDOW_BUTTON_3)
         {
             std::cout <<"id:"<<id<< "Button clicked\n";
-            if (Qmarks_visible[3])
+            if (Fenetres_visible[3])
             {
                 std::cout <<"Bonne réponse"<<std::endl;
-                Qmarks_visible[3] = false;
+                Fenetres_visible[3] = false;
+                Qmarks[3] -> setVisible(false);
+                Windows[3] -> setVisible(false);
 
             }
         }
@@ -252,16 +260,20 @@ bool EventReceiver::gui_handler(const SEvent &event)
         if (id == WINDOW_BUTTON_4)
           {
             std::cout <<"id:"<<id<< "Button clicked\n";
-            if (Qmarks_visible[0])
+            if (Fenetres_visible[0])
             {
                 std::cout <<"Bonne réponse"<<std::endl;
-                Qmarks_visible[0] = false;
+                Fenetres_visible[0] = false;
+                Qmarks[0] -> setVisible(false);
+                Windows[0] -> setVisible(false);
 
             }
-            else if (Qmarks_visible[2])
+            else if (Fenetres_visible[2])
             {
                 std::cout <<"Bonne réponse"<<std::endl;
-                Qmarks_visible[2] = false;
+                Fenetres_visible[2] = false;
+                Qmarks[2] -> setVisible(false);
+                Windows[2] -> setVisible(false);
 
             }
           }
@@ -353,17 +365,25 @@ void EventReceiver::set_code(  std::vector<int> c)
 }
 
 /**************************************************************************\
- * EventReceiver::set_QMarks                                             *
+ * EventReceiver::set_Fenetres                                             *
 \**************************************************************************/
-void EventReceiver::set_Qmarks_visible(std::vector<bool> Q)
+void EventReceiver::set_Fenetres_visible(std::vector<bool> F)
 {
-  Qmarks_visible = Q ;
+  Fenetres_visible = F;
 }
 
-/////**************************************************************************\
-//// * EventReceiver::set_Answers                                               *
-////\**************************************************************************/
-void EventReceiver::set_Answers(  std::vector<const wchar_t*> A)
+/**************************************************************************\
+ * EventReceiver::set_Qmarks                                             *
+\**************************************************************************/
+void EventReceiver::set_Qmarks(std::vector<irr::scene::IAnimatedMeshSceneNode*> Q)
 {
-  Answers = A ;
+  Qmarks = Q ;
+}
+
+/**************************************************************************\
+ * EventReceiver::set_Windows                                            *
+\**************************************************************************/
+void EventReceiver::set_Windows(std::vector<irr::gui::IGUIWindow*> W)
+{
+  Windows = W ;
 }

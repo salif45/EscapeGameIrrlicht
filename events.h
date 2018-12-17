@@ -6,6 +6,12 @@
 #include <vector>
 
 #include <irrlicht.h>
+//using namespace irr;
+
+//namespace ic = irr::core;
+//namespace is = irr::scene;
+//namespace iv = irr::video;
+//namespace ig = irr::gui;
 
 
 
@@ -15,8 +21,9 @@ struct EventReceiver : public irr::IEventReceiver
   irr::scene::IAnimatedMeshSceneNode *node;
   //int *code;
   std::vector<int> code;
-  std::vector<bool> Qmarks_visible;
-  std::vector<const wchar_t*> Answers;
+  std::vector<bool> Fenetres_visible;
+  std::vector<irr::scene::IAnimatedMeshSceneNode*> Qmarks;
+  std::vector<irr::gui::IGUIWindow*> Windows;
   bool button_pressed;
   int  old_x, old_y;
   std::vector<irr::video::ITexture*> textures;
@@ -31,8 +38,10 @@ public:
   bool OnEvent(const irr::SEvent &event);
   void set_gui(irr::gui::IGUIEnvironment *gui);
   void set_code(std::vector<int> c);
-  void set_Qmarks_visible(std::vector<bool> Q);
-  void set_Answers(std::vector<const wchar_t*> A);
+  void set_Fenetres_visible(std::vector<bool> F);
+  void set_Qmarks(std::vector<irr::scene::IAnimatedMeshSceneNode*> Q);
+  void set_Windows(std::vector<irr::gui::IGUIWindow*> Windows);
+
 //  void set_node(irr::scene::IAnimatedMeshSceneNode *node);
   void set_textures(const std::vector<irr::video::ITexture *> &tex){textures=tex;}
 };

@@ -184,43 +184,61 @@ int main()
   ic::array<const wchar_t* > Questions;
   ic::array<const wchar_t *> Answers_Q1,Answers_Q2,Answers_Q3,Answers_Q4,Answers_Q5,Answers_Q6;
 
-  Questions.push_back(L"La mère de Lucie a 3 enfants. Ses deux premières filles se nomment "
-                      "Marie et Anna. Comment s'appelle son troisième enfant");
-  Questions.push_back(L"Vous entrez dans une pièce une allumette à la main. Il fait noir et les seuls "
-                      "producteurs de lumière sont : une bougie, une cuisinière à gaz et une lampe à pétrole. Qu'allumez-vous en premier ?");
-  Questions.push_back(L"Quel est le plus grand pays du monde ?");
-  Questions.push_back(L"Dans une étable avec des vaches, il y a :116 oreilles 232 pieds, 58 têtes");
-  Questions.push_back(L"713705. Quel est le mot qui est écrit ici ?");
-  Questions.push_back(L"A quoi équivaut la moitié de 4 plus 4 ");
+  Questions.push_back(L"                        La mère de Lucie a 3 filles.\n"
+                      "   Ses deux premières filles se nomment Marie et Anna.\n"
+                      "               Comment s'appelle sa troisième fille ?");
+
+  Questions.push_back(L"  Vous entrez dans une pièce une allumette à la main.\n"
+                      "  Il fait noir et les seuls producteurs de lumière sont :\n"
+                      "une bougie, une cuisinière à gaz et une lampe à pétrole.\n"
+                      "                     Qu'allumez-vous en premier ?");
+
+  //Questions.push_back(L"             Quel est le plus grand pays du monde ?");
+
+  Questions.push_back(L"\n                 Quel est le plus grand département\n"
+                      "                         de France métropolitaine ?");
+
+  Questions.push_back(L"            Dans une étable avec des vaches, il y a :"
+                      "\n                116 oreilles, 232 pieds et 58 têtes."
+                      "\n                     Combien y a-t-il de vaches ?");
+
+  Questions.push_back(L"                                      713705"
+                      "\n                    Quel est le mot qui est écrit ici ?");
+
+  Questions.push_back(L"              A quoi équivaut la moitié de 4 plus 4 ?");
 
   Answers_Q1.push_back(L"Julie"),Answers_Q1.push_back(L"Sarah"),
   Answers_Q1.push_back(L"Maëva"),Answers_Q1.push_back(L"Lucie");
 
-  Answers_Q2.push_back(L"Bougie"),Answers_Q2.push_back(L"Allumette"),
-  Answers_Q2.push_back(L"Cuisinière à gaz"),Answers_Q2.push_back(L"lampe à pétrole");
+  Answers_Q2.push_back(L"La bougie"),Answers_Q2.push_back(L"L'allumette"),
+  Answers_Q2.push_back(L"La cuisinière à gaz"),Answers_Q2.push_back(L"La lampe à pétrole");
 
-  Answers_Q3.push_back(L"États-Unis"),Answers_Q3.push_back(L"Chine"),
-  Answers_Q3.push_back(L"Canada"),Answers_Q3.push_back(L"Russie");
+//  Answers_Q3.push_back(L"Les États-Unis"),Answers_Q3.push_back(L"La Chine"),
+//  Answers_Q3.push_back(L"Le Canada"),Answers_Q3.push_back(L"La Russie");
+  Answers_Q3.push_back(L"La Dordogne"),Answers_Q3.push_back(L"Paris"),
+  Answers_Q3.push_back(L"La Guyane"),Answers_Q3.push_back(L"La Gironde");
 
-  Answers_Q4.push_back(L"56"),Answers_Q4.push_back(L"57"),
-  Answers_Q4.push_back(L"58"),Answers_Q4.push_back(L"59");
+  Answers_Q4.push_back(L"56"),Answers_Q4.push_back(L"232"),
+  Answers_Q4.push_back(L"58"),Answers_Q4.push_back(L"116");
 
-  Answers_Q5.push_back(L"Jupiter"),Answers_Q5.push_back(L"Soleil"),
-  Answers_Q5.push_back(L"Saturne"),Answers_Q5.push_back(L"Mercure" );
+  Answers_Q5.push_back(L"713705"),Answers_Q5.push_back(L"Soleil"),
+  Answers_Q5.push_back(L"173705"),Answers_Q5.push_back(L"La réponse D" );
 
   Answers_Q6.push_back(L"6"),Answers_Q6.push_back(L"2"),
   Answers_Q6.push_back(L"4"),Answers_Q6.push_back(L"3");
 
   // differents flags de visibilité du QMark et reponsses pour la verification de la réponse
-  std::vector<bool> Qmarks_visible;
-  Qmarks_visible.push_back(*visible_QMark1),Qmarks_visible.push_back(*visible_QMark2),Qmarks_visible.push_back(*visible_QMark3),
-  Qmarks_visible.push_back(*visible_QMark4),Qmarks_visible.push_back(*visible_QMark5),Qmarks_visible.push_back(*visible_QMark6);
-  receiver.set_Qmarks_visible(Qmarks_visible);
+  std::vector<bool> Fenetres_visible;
+  Fenetres_visible.push_back(*fenetre_QMark1),Fenetres_visible.push_back(*fenetre_QMark2),Fenetres_visible.push_back(*fenetre_QMark3),
+  Fenetres_visible.push_back(*fenetre_QMark4),Fenetres_visible.push_back(*fenetre_QMark5),Fenetres_visible.push_back(*fenetre_QMark6);
+  receiver.set_Fenetres_visible(Fenetres_visible);
 
-  std::vector<const wchar_t*> Answers;
-  Answers.push_back(Answers_Q1[3]), Answers.push_back(Answers_Q2[1]),Answers.push_back(Answers_Q3[3]),
-  Answers.push_back(Answers_Q4[2]), Answers.push_back(Answers_Q5[1]),Answers.push_back(Answers_Q6[0]);
-  receiver.set_Answers(Answers);
+
+
+  std::vector<is::IAnimatedMeshSceneNode*> Qmarks;
+  Qmarks.push_back(QMark1), Qmarks.push_back(QMark2),Qmarks.push_back(QMark3),
+  Qmarks.push_back(QMark4), Qmarks.push_back(QMark5),Qmarks.push_back(QMark6);
+  receiver.set_Qmarks(Qmarks);
 
 
   //Créations des fenêtres pour les questions
@@ -253,6 +271,12 @@ int main()
   window_enigme_QMark6 = create_window(gui,Questions[5],Answers_Q6[0],
                                         Answers_Q6[1],Answers_Q6[2],Answers_Q6[3]);
   window_enigme_QMark6->setVisible(false);
+
+  std::vector<ig::IGUIWindow *> Windows;
+  Windows.push_back(window_enigme_QMark1), Windows.push_back(window_enigme_QMark2), Windows.push_back(window_enigme_QMark3),
+  Windows.push_back(window_enigme_QMark4), Windows.push_back(window_enigme_QMark5), Windows.push_back(window_enigme_QMark6);
+  receiver.set_Windows(Windows);
+
 
   ig::IGUIWindow *window_cadenas;
 
@@ -311,6 +335,10 @@ int main()
         }
     }
 
+    Fenetres_visible[0] = *cpt_QMark1, Fenetres_visible[1] = *cpt_QMark2, Fenetres_visible[2] = *cpt_QMark3,
+    Fenetres_visible[3] = *cpt_QMark4, Fenetres_visible[4] = *cpt_QMark5, Fenetres_visible[5] = *cpt_QMark6;
+    receiver.set_Fenetres_visible(Fenetres_visible);
+
     //Si le temps imparti n'est pas terminé
     if (*visible_QMark1)
     {
@@ -319,7 +347,9 @@ int main()
                                   window_enigme_QMark1, driver);
     }
 //    else
+//    {
 //        QMark_invisible (QMark1,visible_QMark1,fenetre_QMark1,cpt_QMark1,timer_10,timer_1,window_enigme_QMark1,driver);
+//    }
 
     if (*visible_QMark2)
     {
@@ -355,6 +385,7 @@ int main()
                                  fenetre_QMark6, cpt_QMark6,timer_10,timer_1,
                                   window_enigme_QMark6, driver);
     }
+
 
 
 
