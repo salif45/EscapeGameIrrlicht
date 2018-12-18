@@ -24,11 +24,17 @@ struct EventReceiver : public irr::IEventReceiver
   std::vector<bool> Fenetres_visible;
   std::vector<irr::scene::IAnimatedMeshSceneNode*> Qmarks;
   std::vector<irr::gui::IGUIWindow*> Windows;
+  std::vector<irr::gui::IGUIImage*> code_images;
+  std::vector<irr::gui::IGUIImage*> timer_images;
+  std::vector<irr::video::ITexture*> digits_images;
   bool button_pressed;
   int  old_x, old_y;
   std::vector<irr::video::ITexture*> textures;
   int current_texture;
   int *item_box;
+  int *position_it; //position iterrateur dans code_images
+
+
 
   bool keyboard(const irr::SEvent &event);
   bool mouse(const irr::SEvent &event);
@@ -40,7 +46,10 @@ public:
   void set_code(std::vector<int> c);
   void set_Fenetres_visible(std::vector<bool> F);
   void set_Qmarks(std::vector<irr::scene::IAnimatedMeshSceneNode*> Q);
-  void set_Windows(std::vector<irr::gui::IGUIWindow*> Windows);
+  void set_Windows(std::vector<irr::gui::IGUIWindow*> W);
+  void set_code_images(std::vector<irr::gui::IGUIImage*> CI);
+  void set_timer_images(std::vector<irr::gui::IGUIImage*> TI);
+  void set_digits_images(std::vector<irr::video::ITexture*> DI);
 
 //  void set_node(irr::scene::IAnimatedMeshSceneNode *node);
   void set_textures(const std::vector<irr::video::ITexture *> &tex){textures=tex;}

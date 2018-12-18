@@ -90,7 +90,7 @@ int main()
 
 
 
- //perso
+ //personnage
  is::IAnimatedMeshSceneNode *perso = create_perso (smgr, driver,ic::vector3df(60, -30, 0));
 
 
@@ -119,16 +119,33 @@ int main()
   digits[7] = driver->getTexture("data/7.png");
   digits[8] = driver->getTexture("data/8.png");
   digits[9] = driver->getTexture("data/9.png");
-
+  digits[10] = driver->getTexture("data/cross.png");
+  std::vector<iv::ITexture*> digits_images;
+  digits_images.push_back(digits[0]), digits_images.push_back(digits[1]),digits_images.push_back(digits[2]),digits_images.push_back(digits[3]),
+   digits_images.push_back(digits[4]),digits_images.push_back(digits[5]),digits_images.push_back(digits[6]),digits_images.push_back(digits[7]),
+   digits_images.push_back(digits[8]),digits_images.push_back(digits[9]);
+  receiver.set_digits_images(digits_images);
   // Création des places pour les chiffres du code et du timer
   ig::IGUIImage *code_1000  = gui->addImage(ic::rect<s32>(430,10,  470,50)); code_1000->setScaleImage(true);
   ig::IGUIImage *code_100   = gui->addImage(ic::rect<s32>(470,10,  510,50)); code_100->setScaleImage(true);
   ig::IGUIImage *code_10    = gui->addImage(ic::rect<s32>(510,10, 550,50)); code_10->setScaleImage(true);
   ig::IGUIImage *code_1     = gui->addImage(ic::rect<s32>(550,10, 590,50)); code_1->setScaleImage(true);
 
+
+  std::vector<ig::IGUIImage*> code_images;
+  code_images.push_back(code_1000), code_images.push_back(code_100),
+          code_images.push_back(code_10),code_images.push_back(code_1);
+  // variables des images du codes à passer à la fonction event.cpp
+  receiver.set_code_images(code_images);
+
   ig::IGUIImage *timer_10    = gui->addImage(ic::rect<s32>(50,10, 90,50)); timer_10->setScaleImage(true);
   ig::IGUIImage *timer_1     = gui->addImage(ic::rect<s32>(90,10, 130,50)); timer_1->setScaleImage(true);
 
+
+  // variables des images du timer à passer à la fonction event.cpp
+  std::vector<ig::IGUIImage*> timer_images;
+  timer_images.push_back(timer_10),  timer_images.push_back(timer_10);
+  receiver.set_timer_images(timer_images);
 
   //Initialisation de la caméra
   is::ICameraSceneNode *cam = smgr->addCameraSceneNode(perso, ic::vector3df(-60, 30, 0), ic::vector3df(0, 5, 0));
@@ -150,11 +167,9 @@ int main()
   int code_10_key =rand()%(10-1) +1;
   int code_1_key =rand()%(10-1) +1;
   std::vector<int> code;
-  code.push_back(code_1000_key);
-  code.push_back(code_100_key);
-  code.push_back(code_10_key);
-  code.push_back(code_1_key);
-  //int code[4] = {code_1000_key ,code_100_key ,code_10_key ,code_1_key};
+
+  code.push_back(code_1_key),code.push_back(code_10_key),
+  code.push_back(code_100_key),code.push_back(code_1000_key);
   receiver.set_code(code);
   std::cout<<code_1000_key<<code_100_key<<code_10_key<<code_1_key<<std::endl;
 
@@ -193,7 +208,6 @@ int main()
                       "une bougie, une cuisinière à gaz et une lampe à pétrole.\n"
                       "                     Qu'allumez-vous en premier ?");
 
-  //Questions.push_back(L"             Quel est le plus grand pays du monde ?");
 
   Questions.push_back(L"\n                 Quel est le plus grand département\n"
                       "                         de France métropolitaine ?");
@@ -213,8 +227,6 @@ int main()
   Answers_Q2.push_back(L"La bougie"),Answers_Q2.push_back(L"L'allumette"),
   Answers_Q2.push_back(L"La cuisinière à gaz"),Answers_Q2.push_back(L"La lampe à pétrole");
 
-//  Answers_Q3.push_back(L"Les États-Unis"),Answers_Q3.push_back(L"La Chine"),
-//  Answers_Q3.push_back(L"Le Canada"),Answers_Q3.push_back(L"La Russie");
   Answers_Q3.push_back(L"La Dordogne"),Answers_Q3.push_back(L"Paris"),
   Answers_Q3.push_back(L"La Guyane"),Answers_Q3.push_back(L"La Gironde");
 
@@ -286,10 +298,10 @@ int main()
   timer_1->setImage(digits[(0 / 100) % 10]);
 
   // Initialisation du code :
-  code_1000->setImage(digits[(0 / 1000) % 10]);
-  code_100->setImage(digits[(0 / 100) % 10]);
-  code_10->setImage(digits[(0 / 10) % 10]);
-  code_1->setImage(digits[(0 / 1) % 10]);
+  code_1000->setImage(digits[10]);
+  code_100->setImage(digits[10]);
+  code_10->setImage(digits[10]);
+  code_1->setImage(digits[10]);
 
 
 
@@ -339,6 +351,9 @@ int main()
     Fenetres_visible[3] = *cpt_QMark4, Fenetres_visible[4] = *cpt_QMark5, Fenetres_visible[5] = *cpt_QMark6;
     receiver.set_Fenetres_visible(Fenetres_visible);
 
+    timer_images.push_back(timer_10),  timer_images.push_back(timer_10);
+    receiver.set_timer_images(timer_images);
+
     //Si le temps imparti n'est pas terminé
     if (*visible_QMark1)
     {
@@ -346,10 +361,7 @@ int main()
                                  fenetre_QMark1, cpt_QMark1,timer_10,timer_1,
                                   window_enigme_QMark1, driver);
     }
-//    else
-//    {
-//        QMark_invisible (QMark1,visible_QMark1,fenetre_QMark1,cpt_QMark1,timer_10,timer_1,window_enigme_QMark1,driver);
-//    }
+
 
     if (*visible_QMark2)
     {
