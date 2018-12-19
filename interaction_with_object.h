@@ -31,10 +31,7 @@ bool interaction_perso_QMark (is::IAnimatedMeshSceneNode *QMark,  is::IAnimatedM
                                                                 ig::IGUIImage *timer_1,
                               ig::IGUIWindow *window_enigme,iv::IVideoDriver  *driver);
 
-void QMark_invisible (is::IAnimatedMeshSceneNode *QMark, bool *visible,
-                              bool *fenetre, bool *cpt,ig::IGUIImage *timer_10,
-                                                                ig::IGUIImage *timer_1,
-                              ig::IGUIWindow *window_enigme, iv::IVideoDriver  *driver);
+
 
 
 #endif // INTERACTION_WITH_OBJECT_H

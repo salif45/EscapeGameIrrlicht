@@ -36,7 +36,7 @@ bool interaction_perso_QMark (is::IAnimatedMeshSceneNode *QMark,  is::IAnimatedM
         }
 
 
-        if(*cpt)
+        if(*cpt )
         {
             end = std::chrono::system_clock::now();
 
@@ -74,27 +74,4 @@ bool interaction_perso_QMark (is::IAnimatedMeshSceneNode *QMark,  is::IAnimatedM
 
 
 
-void QMark_invisible (is::IAnimatedMeshSceneNode *QMark, bool *visible,
-                              bool *fenetre, bool *cpt,ig::IGUIImage *timer_10,
-                                                                ig::IGUIImage *timer_1,
-                              ig::IGUIWindow *window_enigme, iv::IVideoDriver  *driver)
-{
 
-    iv::ITexture *digits[10];
-    digits[0] = driver->getTexture("data/0.png");
-    digits[1] = driver->getTexture("data/1.png");
-    digits[2] = driver->getTexture("data/2.png");
-    digits[3] = driver->getTexture("data/3.png");
-    digits[4] = driver->getTexture("data/4.png");
-    digits[5] = driver->getTexture("data/5.png");
-    digits[6] = driver->getTexture("data/6.png");
-    digits[7] = driver->getTexture("data/7.png");
-    digits[8] = driver->getTexture("data/8.png");
-    digits[9] = driver->getTexture("data/9.png");
-    *fenetre = false;
-    *cpt = false;
-    window_enigme->setVisible(*visible);
-    QMark->setVisible(*visible);
-    timer_10->setImage(digits[(0 / 1000) % 10]);
-    timer_1->setImage(digits[(0 / 100) % 10]);
-}
