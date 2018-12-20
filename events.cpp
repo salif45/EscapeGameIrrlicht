@@ -24,7 +24,8 @@ namespace ig = irr::gui;
  * EventReceiver::EventReceiver                                           *
 \**************************************************************************/
 EventReceiver::EventReceiver()
-  : code(0),gui(nullptr),node(nullptr), button_pressed(false),Fenetres_visible(false)
+  : code(0),code_cp(0),gui(nullptr),node(nullptr), button_pressed(false),Fenetres_visible(0),
+    item1Value(0),item2Value(0),item3Value(0),item4Value(0)
 {
 }
 
@@ -37,15 +38,15 @@ bool EventReceiver::keyboard(const SEvent &event)
 
   if (event.KeyInput.PressedDown)
   {
-    if(Fenetres_visible[0] || Fenetres_visible[1] || Fenetres_visible[2] || Fenetres_visible[3] || Fenetres_visible[4] || Fenetres_visible[5])
-    {
-        ic::vector3df position = node->getPosition();
-        ic::vector3df rotation = node->getRotation();
-        node->setPosition(position);
-        node->setRotation(rotation);
-    }
-    else
-    {
+//    if(Fenetres_visible[0] || Fenetres_visible[1] || Fenetres_visible[2] || Fenetres_visible[3] || Fenetres_visible[4] || Fenetres_visible[5])
+//    {
+//        ic::vector3df position = node->getPosition();
+//        ic::vector3df rotation = node->getRotation();
+//        node->setPosition(position);
+//        node->setRotation(rotation);
+//    }
+//    else
+//    {
         ic::vector3df position = node->getPosition();
         ic::vector3df rotation = node->getRotation();
 
@@ -147,7 +148,7 @@ bool EventReceiver::keyboard(const SEvent &event)
         }
         node->setPosition(position);
         node->setRotation(rotation);
-    }
+//    }
 
   }
   if (!event.KeyInput.PressedDown)
@@ -219,97 +220,83 @@ bool EventReceiver::gui_handler(const SEvent &event)
       {
         s32 id = event.GUIEvent.Caller->getID();
         if (id == WINDOW_BUTTON_OK)
-//             std::cout <<"id:"<<id<< "Button clicked\n";
+
         {
-            //if(code[0]== item_box)
-//            std::cout <<"id: "<<*item_box<< "Button clicked\n";
+            //if(code_cp[0]== item1Value)
+                std::cout <<"id: "<<code_cp[0]<<"combo: "<< item1Value<< "Button clicked\n";
+
         }
         if (id == WINDOW_BUTTON_1)
         {
             std::cout <<"id:"<<id<< "Button clicked\n";
             if (Fenetres_visible[0])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[0] = false;
 
                 Qmarks[0] -> setVisible(false);
                 Windows[0] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[1])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[1] = false;
 
                 Qmarks[1] -> setVisible(false);
                 Windows[1] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[2])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[2] = false;
 
                 Qmarks[2] -> setVisible(false);
                 Windows[2] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[3])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[3] = false;
 
                 Qmarks[3] -> setVisible(false);
                 Windows[3] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[4])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[4] = false;
 
                 Qmarks[4] -> setVisible(false);
                 Windows[4] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[5])
             {
-                std::cout <<"Bonne réponse"<<std::endl;
                 Fenetres_visible[5] = false;
 
-                if (code.size() != 0)
+                if (code->size() != 0)
                 {
-                    position_it = code_images.size() - code.size();
-                    auto key = code.back();
-                    code.pop_back();
+                    position_it = code_images.size() - code->size();
+                    auto key = code->back();
+                    code_cp.push_back(key);
+                    code->pop_back();
                     code_images[position_it] -> setImage(digits_images[key]);
                 }
                 Qmarks[5] -> setVisible(false);
                 Windows[5] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
-
+                if (code->size()== 0)
+                {
+                    for (unsigned int i = 0 ; i < Qmarks.size();i++)
+                    {
+                        Qmarks[i] -> setVisible(false);
+                        Windows[i] -> setVisible(false);
+                        Fenetres_visible[i] = false;
+                    }
+                }
 
             }
         }
@@ -319,94 +306,93 @@ bool EventReceiver::gui_handler(const SEvent &event)
             std::cout <<"id:"<<id<< "Button clicked\n";
             if (Fenetres_visible[0])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[0] = false;
 
                 Qmarks[0] -> setVisible(false);
                 Windows[0] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[2])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[2] = false;
 
                 Qmarks[2] -> setVisible(false);
                 Windows[2] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
-
 
             }
             if (Fenetres_visible[3])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[3] = false;
 
                 Qmarks[3] -> setVisible(false);
                 Windows[3] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[5])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[5] = false;
 
                 Qmarks[5] -> setVisible(false);
                 Windows[5] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[1])
             {
-                std::cout <<"Bonne réponse"<<std::endl;
                 Fenetres_visible[1] = false;
 
-                if (code.size() != 0)
+                if (code->size() != 0)
                 {
-                    position_it = code_images.size() - code.size();
-                    auto key = code.back();
-                    code.pop_back();
+                    position_it = code_images.size() - code->size();
+                    auto key = code->back();
+                    code_cp.push_back(key);
+                    code->pop_back();
                     code_images[position_it] -> setImage(digits_images[key]);
                 }
                 Qmarks[1] -> setVisible(false);
                 Windows[1] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
+                if (code->size()== 0)
+                {
+                    for (unsigned int i = 0 ; i < Qmarks.size();i++)
+                    {
+                        Qmarks[i] -> setVisible(false);
+                        Windows[i] -> setVisible(false);
+                        Fenetres_visible[i] = false;
+
+                    }
+
+                }
+
 
 
             }
             else if (Fenetres_visible[4])
             {
-                std::cout <<"Bonne réponse"<<std::endl;
                 Fenetres_visible[4] = false;
 
-                if (code.size() != 0)
+                if (code->size() != 0)
                 {
-                    position_it = code_images.size() - code.size();
-                    auto key = code.back();
-                    code.pop_back();
+                    position_it = code_images.size() - code->size();
+                    auto key = code->back();
+                    code_cp.push_back(key);
+                    code->pop_back();
                     code_images[position_it] -> setImage(digits_images[key]);
                 }
+
                 Qmarks[4] -> setVisible(false);
                 Windows[4] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
+                if (code->size()== 0)
+                {
+                    for (unsigned int i = 0 ; i < Qmarks.size();i++)
+                    {
+                        Qmarks[i] -> setVisible(false);
+                        Windows[i] -> setVisible(false);
+                        Fenetres_visible[i] = false;
 
+                    }
+                }
 
 
             }
@@ -416,89 +402,76 @@ bool EventReceiver::gui_handler(const SEvent &event)
 
         if (id == WINDOW_BUTTON_3)
         {
-            std::cout <<"id:"<<id<< "Button clicked\n";
             if (Fenetres_visible[0])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[0] = false;
 
                 Qmarks[0] -> setVisible(false);
                 Windows[0] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[1])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[1] = false;
 
                 Qmarks[1] -> setVisible(false);
                 Windows[1] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[2])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[2] = false;
 
                 Qmarks[2] -> setVisible(false);
                 Windows[2] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[3])
             {
-                std::cout <<"Bonne réponse"<<std::endl;
                 Fenetres_visible[3] = false;
 
-                if (code.size() != 0)
+                if (code->size() != 0)
                 {
-                    position_it = code_images.size() - code.size();
-                    auto key = code.back();
-                    code.pop_back();
+                    position_it = code_images.size() - code->size();
+                    auto key = code->back();
+                    code_cp.push_back(key);
+                    code->pop_back();
                     code_images[position_it] -> setImage(digits_images[key]);
                 }
                 Qmarks[3] -> setVisible(false);
                 Windows[3] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
+                if (code->size()== 0)
+                {
+                    for (unsigned int i = 0 ; i < Qmarks.size();i++)
+                    {
+                        Qmarks[i] -> setVisible(false);
+                        Windows[i] -> setVisible(false);
+                        Fenetres_visible[i] = false;
+
+                    }
+                }
+
 
 
             }
             if (Fenetres_visible[4])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[4] = false;
 
                 Qmarks[4] -> setVisible(false);
                 Windows[4] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[5])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[5] = false;
 
                 Qmarks[5] -> setVisible(false);
                 Windows[5] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
@@ -506,98 +479,94 @@ bool EventReceiver::gui_handler(const SEvent &event)
 
         if (id == WINDOW_BUTTON_4)
           {
-            std::cout <<"id:"<<id<< "Button clicked\n";
             if (Fenetres_visible[1])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[1] = false;
 
                 Qmarks[1] -> setVisible(false);
                 Windows[1] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[3])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[3] = false;
 
                 Qmarks[3] -> setVisible(false);
                 Windows[3] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[4])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[4] = false;
 
                 Qmarks[4] -> setVisible(false);
                 Windows[4] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
             if (Fenetres_visible[5])
             {
-                std::cout <<"Mauvaise réponse"<<std::endl;
                 Fenetres_visible[5] = false;
 
                 Qmarks[5] -> setVisible(false);
                 Windows[5] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
 
 
 
             }
             if (Fenetres_visible[0])
             {
-                std::cout <<"Bonne réponse"<<std::endl;
                 Fenetres_visible[0] = false;
 
-                if (code.size() != 0)
+                if (code->size() != 0)
                 {
-                    position_it = code_images.size() - code.size();
-                    auto key = code.back();
-                    code.pop_back();
+                    position_it = code_images.size() - code->size();
+                    auto key = code->back();
+                    code_cp.push_back(key);
+                    code->pop_back();
                     code_images[position_it] -> setImage(digits_images[key]);
                 }
                 Qmarks[0] -> setVisible(false);
                 Windows[0] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
+                if (code->size()== 0)
+                {
+                    for (unsigned int i = 0 ; i < Qmarks.size();i++)
+                    {
+                        Qmarks[i] -> setVisible(false);
+                        Windows[i] -> setVisible(false);
+                        Fenetres_visible[i] = false;
 
+                    }
+                }
 
             }
             else if (Fenetres_visible[2])
             {
-                std::cout <<"Bonne réponse"<<std::endl;
                 Fenetres_visible[2] = false;
 
-                if (code.size() != 0)
+                if (code->size() != 0)
                 {
-                    position_it = code_images.size() - code.size();
-                    auto key = code.back();
-                    code.pop_back();
+                    position_it = code_images.size() - code->size();
+                    auto key = code->back();
+                    code_cp.push_back(key);
+                    code->pop_back();
                     code_images[position_it] -> setImage(digits_images[key]);
                 }
 
                 Qmarks[2] -> setVisible(false);
                 Windows[2] -> setVisible(false);
-                nbr_quest_pass += 1;
-                if (Qmarks.size() - nbr_quest_pass < code.size())
-                    std::cout << "GAME OVER" <<std::endl;
+                if (code->size()== 0)
+                {
+                    for (unsigned int i = 0 ; i < Qmarks.size();i++)
+                    {
+                        Qmarks[i] -> setVisible(false);
+                        Windows[i] -> setVisible(false);
+                        Fenetres_visible[i] = false;
+
+                    }
+                }
 
             }
           }
@@ -611,9 +580,10 @@ bool EventReceiver::gui_handler(const SEvent &event)
         if (id == WINDOW_COMBO_BOX_1)
         {
           ig::IGUIComboBox *cbox = (ig::IGUIComboBox*)event.GUIEvent.Caller;
-          int item = cbox->getSelected();
-          u32 elem_id = cbox->getItemData(item);
-          std::cout << "Combo box changed: item " << item << ", id " << elem_id << std::endl;
+          s32 item_box_1 = cbox->getSelected();
+          item1Value = item_box_1;
+          u32 elem_id = cbox->getItemData(item_box_1);
+          std::cout << "Combo box changed: item " << item_box_1 << ", id " << elem_id << std::endl;
         }
         if (id == WINDOW_COMBO_BOX_2)
         {
@@ -682,10 +652,11 @@ void EventReceiver::set_gui(irr::gui::IGUIEnvironment *g)
 /**************************************************************************\
  * EventReceiver::set_code                                               *
 \**************************************************************************/
-void EventReceiver::set_code(  std::vector<int> c)
+void EventReceiver::set_code(  std::vector<int> *c)
 {
   code = c ;
 }
+
 
 /**************************************************************************\
  * EventReceiver::set_Fenetres                                             *
@@ -698,7 +669,7 @@ void EventReceiver::set_Fenetres_visible(std::vector<bool> F)
 /**************************************************************************\
  * EventReceiver::set_Qmarks                                             *
 \**************************************************************************/
-void EventReceiver::set_Qmarks(std::vector<irr::scene::IAnimatedMeshSceneNode*> Q)
+void EventReceiver::set_Qmarks(std::vector<irr::scene::IAnimatedMeshSceneNode*> &Q)
 {
   Qmarks = Q ;
 }
@@ -706,7 +677,7 @@ void EventReceiver::set_Qmarks(std::vector<irr::scene::IAnimatedMeshSceneNode*> 
 /**************************************************************************\
  * EventReceiver::set_Windows                                            *
 \**************************************************************************/
-void EventReceiver::set_Windows(std::vector<irr::gui::IGUIWindow*> W)
+void EventReceiver::set_Windows(std::vector<irr::gui::IGUIWindow*> &W)
 {
   Windows = W ;
 }
@@ -714,7 +685,7 @@ void EventReceiver::set_Windows(std::vector<irr::gui::IGUIWindow*> W)
 /**************************************************************************\
  * EventReceiver::set_code_images                                          *
 \**************************************************************************/
-void EventReceiver::set_code_images(std::vector<irr::gui::IGUIImage*> CI)
+void EventReceiver::set_code_images(std::vector<irr::gui::IGUIImage*> &CI)
 {
   code_images = CI ;
 }
@@ -723,7 +694,7 @@ void EventReceiver::set_code_images(std::vector<irr::gui::IGUIImage*> CI)
 /**************************************************************************\
  * EventReceiver::set_digit_images                                            *
 \**************************************************************************/
-void EventReceiver::set_digits_images(std::vector<irr::video::ITexture*> DI)
+void EventReceiver::set_digits_images(std::vector<irr::video::ITexture*> &DI)
 {
   digits_images = DI ;
 }

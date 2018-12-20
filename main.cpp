@@ -55,34 +55,28 @@ int main()
   is::IAnimatedMeshSceneNode *cadenas = create_cadenas(smgr, driver, ic::vector3df(145, 20, 37));
 
   //Questions mark
-  is::IAnimatedMeshSceneNode *QMark1 = create_Qmark(smgr,driver, ic::vector3df(265, -20, -176));
-  bool *visible_QMark1 = new bool; //visibilté du point d'interrogation
-  *visible_QMark1 = true;
+  is::IAnimatedMeshSceneNode *QMark1 = create_Qmark(smgr,driver, ic::vector3df(265, -20, -176)); //
+  bool visible_QMark1 = true; //visibilté du point d'interrogation
   QMark1->setVisible(visible_QMark1);
 
   is::IAnimatedMeshSceneNode *QMark2 = create_Qmark(smgr,driver, ic::vector3df(600, -20, -7));
-  bool *visible_QMark2 = new bool;
-  *visible_QMark2 = true;
+  bool visible_QMark2 = true;
   QMark2->setVisible(visible_QMark2);
 
   is::IAnimatedMeshSceneNode *QMark3 = create_Qmark(smgr,driver, ic::vector3df(212, -20, 11));
-  bool *visible_QMark3 = new bool;
-  *visible_QMark3 = true;
+  bool visible_QMark3 =true;
   QMark3->setVisible(visible_QMark3);
 
   is::IAnimatedMeshSceneNode *QMark4 = create_Qmark(smgr,driver, ic::vector3df(-147, -20, 70));
-  bool *visible_QMark4 = new bool;
-  *visible_QMark4 = true;
+  bool visible_QMark4 =true;
   QMark4->setVisible(visible_QMark4);
 
   is::IAnimatedMeshSceneNode *QMark5 = create_Qmark(smgr,driver, ic::vector3df(-520, -20, -1));
-  bool *visible_QMark5 = new bool;
-  *visible_QMark5 = true;
+  bool visible_QMark5 = true;
   QMark5->setVisible(visible_QMark5);
 
   is::IAnimatedMeshSceneNode *QMark6 = create_Qmark(smgr,driver, ic::vector3df(-59, -20, -116));
-  bool *visible_QMark6 = new bool;
-  *visible_QMark6 = true;
+  bool visible_QMark6 = true;
   QMark6->setVisible(visible_QMark6);
 
 
@@ -108,7 +102,7 @@ int main()
                                                ic::vector3df(0, 20, 0));  // décalage du centre
   perso->addAnimator(anim);
   // Chargement des textures pour le code
-  iv::ITexture *digits[10];
+  iv::ITexture *digits[11];
   digits[0] = driver->getTexture("data/0.png");
   digits[1] = driver->getTexture("data/1.png");
   digits[2] = driver->getTexture("data/2.png");
@@ -143,6 +137,7 @@ int main()
 
 
 
+
   //Initialisation de la caméra
   is::ICameraSceneNode *cam = smgr->addCameraSceneNode(perso, ic::vector3df(-60, 30, 0), ic::vector3df(0, 5, 0));
   smgr -> setActiveCamera(cam);
@@ -158,32 +153,28 @@ int main()
 
   // Génération du code clé (4 chiffres entre 1 et 9)
   srand(time(0));
-  int code_1000_key =rand()%(10-1) +1;
-  int code_100_key =rand()%(10-1) +1;
-  int code_10_key =rand()%(10-1) +1;
-  int code_1_key =rand()%(10-1) +1;
-  std::vector<int> code;
+  int code_1000_key =rand()%(10-1);
+  int code_100_key =rand()%(10-1);
+  int code_10_key =rand()%(10-1);
+  int code_1_key =rand()%(10-1);
 
+  std::vector<int> code;
   code.push_back(code_1_key),code.push_back(code_10_key),
   code.push_back(code_100_key),code.push_back(code_1000_key);
-  receiver.set_code(code);
+  receiver.set_code(&code);
   std::cout<<code_1000_key<<code_100_key<<code_10_key<<code_1_key<<std::endl;
 
 
   //flag pour verifier l'affichage de la fenêtre des questions
-  bool *fenetre_QMark1 = new bool,*fenetre_QMark2 = new bool,*fenetre_QMark3 = new bool,
-          *fenetre_QMark4 = new bool,*fenetre_QMark5 = new bool, *fenetre_QMark6 = new bool;
 
-      *fenetre_QMark1 = false, *fenetre_QMark2 = false,*fenetre_QMark3 = false,
-      *fenetre_QMark4 = false,*fenetre_QMark5 = false,*fenetre_QMark6 = false;
+   bool   fenetre_QMark1 = false, fenetre_QMark2 = false,fenetre_QMark3 = false,
+      fenetre_QMark4 = false,fenetre_QMark5 = false,fenetre_QMark6 = false;
 
 
   //flag pour commencer le décompte du temps
-  bool *cpt_QMark1 = new bool, *cpt_QMark2 = new bool, *cpt_QMark3 = new bool,
-        *cpt_QMark4 = new bool,*cpt_QMark5 = new bool,*cpt_QMark6 = new bool  ;
 
-      *cpt_QMark1 =false,*cpt_QMark2 =false,*cpt_QMark3 =false,
-      *cpt_QMark4 =false,*cpt_QMark5 =false,*cpt_QMark6 =false;
+    bool  cpt_QMark1 =false,cpt_QMark2 =false,cpt_QMark3 =false,
+      cpt_QMark4 =false,cpt_QMark5 =false,cpt_QMark6 =false;
 
 
   //flag pour verifier l'affichage de la fenêtre du cadenas
@@ -237,8 +228,8 @@ int main()
 
   // differents flags de visibilité du QMark et reponsses pour la verification de la réponse
   std::vector<bool> Fenetres_visible;
-  Fenetres_visible.push_back(*fenetre_QMark1),Fenetres_visible.push_back(*fenetre_QMark2),Fenetres_visible.push_back(*fenetre_QMark3),
-  Fenetres_visible.push_back(*fenetre_QMark4),Fenetres_visible.push_back(*fenetre_QMark5),Fenetres_visible.push_back(*fenetre_QMark6);
+  Fenetres_visible.push_back(fenetre_QMark1),Fenetres_visible.push_back(fenetre_QMark2),Fenetres_visible.push_back(fenetre_QMark3),
+  Fenetres_visible.push_back(fenetre_QMark4),Fenetres_visible.push_back(fenetre_QMark5),Fenetres_visible.push_back(fenetre_QMark6);
   receiver.set_Fenetres_visible(Fenetres_visible);
 
 
@@ -287,6 +278,8 @@ int main()
 
 
   ig::IGUIWindow *window_cadenas;
+   window_cadenas = create_window_Cadenas(gui);
+   window_cadenas -> setVisible(false);
 
 
   // Initialisation timer
@@ -320,21 +313,21 @@ int main()
 
 
     // Si perso entre dans cadenas
-    if(abs(perso->getPosition().X - (cadenas->getPosition().X - 5))<=15 && abs(perso->getPosition().Z - cadenas->getPosition().Z)<=12)
+    if(abs(perso->getPosition().X - (cadenas->getPosition().X - 5))<=15 && abs(perso->getPosition().Z - cadenas->getPosition().Z)<=12 && code.size() == 0)
     {
         // Besoin d'un offset de 5 car centre de gravité du cadenas n'est pas en son centre mais sur le côté
         if(!fenetreC)
         {
             // Une fenêtre pour différents réglages
-            window_cadenas = create_window_Cadenas(gui);
+
             window_cadenas->setVisible(true); //Affiche la fenêtre
             fenetreC = true;
         }
     }
     // Si perso sort du cadenas et qu'il n'a pas le bon code,jeu continu
-    if(abs(perso->getPosition().X - (cadenas->getPosition().X - 5))>15 && abs(perso->getPosition().Z - cadenas->getPosition().Z)>12)
+    if((abs(perso->getPosition().X - (cadenas->getPosition().X - 5))>15 && abs(perso->getPosition().Z - cadenas->getPosition().Z)>12) && code.size() == 0)
     {
-        if(fenetreC)
+        if(fenetreC )
         {
             fenetreC = false;
             window_cadenas->setVisible(false);
@@ -345,52 +338,52 @@ int main()
 
 
     //Si le temps imparti n'est pas terminé
-    if (*visible_QMark1)
+    if (visible_QMark1  && code.size() != 0)
     {
-        interaction_perso_QMark (QMark1, perso,visible_QMark1,
-                                 fenetre_QMark1, cpt_QMark1,timer_10,timer_1,
+        interaction_perso_QMark (QMark1, perso,&visible_QMark1,
+                                 &fenetre_QMark1, &cpt_QMark1,timer_10,timer_1,
                                   window_enigme_QMark1, driver);
     }
 
 
-    if (*visible_QMark2)
+    if (visible_QMark2 && code.size() != 0)
     {
-        interaction_perso_QMark (QMark2, perso,visible_QMark2,
-                                 fenetre_QMark2, cpt_QMark2,timer_10,timer_1,
+        interaction_perso_QMark (QMark2, perso,&visible_QMark2,
+                                 &fenetre_QMark2, &cpt_QMark2,timer_10,timer_1,
                                   window_enigme_QMark2, driver);
     }
 
-    if (*visible_QMark3)
+    if (visible_QMark3 && code.size() != 0)
     {
-        interaction_perso_QMark (QMark3, perso,visible_QMark3,
-                                 fenetre_QMark3, cpt_QMark3,timer_10,timer_1,
+        interaction_perso_QMark (QMark3, perso,&visible_QMark3,
+                                 &fenetre_QMark3, &cpt_QMark3,timer_10,timer_1,
                                   window_enigme_QMark3, driver);
     }
 
-    if (*visible_QMark4)
+    if (visible_QMark4 && code.size() != 0)
     {
-        interaction_perso_QMark (QMark4, perso,visible_QMark4,
-                                 fenetre_QMark4, cpt_QMark4,timer_10,timer_1,
+        interaction_perso_QMark (QMark4, perso,&visible_QMark4,
+                                 &fenetre_QMark4, &cpt_QMark4,timer_10,timer_1,
                                   window_enigme_QMark4, driver);
     }
 
-    if (*visible_QMark5)
+    if (visible_QMark5 && code.size() != 0)
     {
-        interaction_perso_QMark (QMark5, perso,visible_QMark5,
-                                 fenetre_QMark5, cpt_QMark5,timer_10,timer_1,
+        interaction_perso_QMark (QMark5, perso,&visible_QMark5,
+                                 &fenetre_QMark5, &cpt_QMark5,timer_10,timer_1,
                                   window_enigme_QMark5, driver);
     }
 
-    if (*visible_QMark6)
+    if (visible_QMark6 && code.size() != 0)
     {
-        interaction_perso_QMark (QMark6, perso,visible_QMark6,
-                                 fenetre_QMark6, cpt_QMark6,timer_10,timer_1,
+        interaction_perso_QMark (QMark6, perso,&visible_QMark6,
+                                 &fenetre_QMark6, &cpt_QMark6,timer_10,timer_1,
                                   window_enigme_QMark6, driver);
     }
 
 
-    Fenetres_visible[0] = *fenetre_QMark1, Fenetres_visible[1] = *fenetre_QMark2, Fenetres_visible[2] = *fenetre_QMark3,
-    Fenetres_visible[3] = *fenetre_QMark4, Fenetres_visible[4] = *fenetre_QMark5, Fenetres_visible[5] = *fenetre_QMark6;
+    Fenetres_visible[0] = fenetre_QMark1, Fenetres_visible[1] = fenetre_QMark2, Fenetres_visible[2] = fenetre_QMark3,
+    Fenetres_visible[3] = fenetre_QMark4, Fenetres_visible[4] = fenetre_QMark5, Fenetres_visible[5] = fenetre_QMark6;
     receiver.set_Fenetres_visible(Fenetres_visible);
 
 
