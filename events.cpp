@@ -24,8 +24,7 @@ namespace ig = irr::gui;
  * EventReceiver::EventReceiver                                           *
 \**************************************************************************/
 EventReceiver::EventReceiver()
-  : code(0),gui(nullptr),node(nullptr), button_pressed(false), current_texture(0),
-    item_box (nullptr)
+  : code(0),gui(nullptr),node(nullptr), button_pressed(false),Fenetres_visible(false)
 {
 }
 
@@ -38,107 +37,117 @@ bool EventReceiver::keyboard(const SEvent &event)
 
   if (event.KeyInput.PressedDown)
   {
-    ic::vector3df position = node->getPosition();
-    ic::vector3df rotation = node->getRotation();
-
-    switch (event.KeyInput.Key)
+    if(Fenetres_visible[0] || Fenetres_visible[1] || Fenetres_visible[2] || Fenetres_visible[3] || Fenetres_visible[4] || Fenetres_visible[5])
     {
-      case KEY_ESCAPE:
-        exit(0);
-    case KEY_UP: // Avance
-      if  (position.X < -215 || position.X > 380) //coordonnés des portes dans les chambres annexes
-      {
-          if(position.Z > 35 || position.X < -620) //position des bords
-          {
-              position.X += 0.5;  //evite de tomber dans le vide
-              position.Z += -0.5;
-          }
-          else if (position.Z < -150)//position des bords
-          {
-              position.Z += 0.5;
-          }
-          else if (position.X > 727) //position des bords
-          {
-              position.X += -0.5;
-          }
-          else
-          {
-              position.X += 2 * cos(rotation.Y * M_PI / 180.0);
-              position.Z += -2 * sin(rotation.Y * M_PI / 180.0);
-              isMoving +=1;
-          }
-      }
-      else
-      {
-          if (position.Z > 130) //Ne s'echappe pas par les escaliers
-          {
-              position.Z += -0.5;
-
-          }
-          else if (position.Z < -260) //Ne s'echappe pas par les escaliers
-          {
-              position.Z += 0.5;
-          }
-          else
-          {
-              position.X += 2 * cos(rotation.Y * M_PI / 180.0);
-              position.Z += -2 * sin(rotation.Y * M_PI / 180.0);
-              isMoving +=1;
-          }
-
-      }
-      break;
-    case KEY_DOWN: // Recule
-      if  (position.X < -215 || position.X > 380)//condition pour ne pas tomber dans les chambres annexes
-      {
-          if(position.Z > 35 || position.X < -620)
-          {
-              position.X += 0.5;
-              position.Z += -0.5;
-          }
-          else if (position.Z < -150)
-          {
-              position.Z += 0.5;
-          }
-          else if (position.X > 727)
-          {
-              position.X += -0.5;
-          }
-          else
-          {
-              position.X += -1 * cos(rotation.Y * M_PI / 180.0);
-              position.Z += 1 * sin(rotation.Y * M_PI / 180.0);
-              isMoving +=1;
-          }
-      }
-      else
-      {
-          if (position.Z > 130)
-          {
-              position.Z += -0.5;
-          }
-          else if (position.Z < -260)
-          {
-              position.Z += 0.5;
-          }
-          else
-          {
-              position.X += -1 * cos(rotation.Y * M_PI / 180.0);
-              position.Z += 1 * sin(rotation.Y * M_PI / 180.0);
-              isMoving +=1;
-          }
-      }
-      break;
-      case KEY_RIGHT: // Tourne à droite
-        rotation.Y += 10;
-        break;
-      case KEY_LEFT: // Tourne à gauche
-        rotation.Y -= 10;
-        break;
-      default:;
+        ic::vector3df position = node->getPosition();
+        ic::vector3df rotation = node->getRotation();
+        node->setPosition(position);
+        node->setRotation(rotation);
     }
-    node->setPosition(position);
-    node->setRotation(rotation);
+    else
+    {
+        ic::vector3df position = node->getPosition();
+        ic::vector3df rotation = node->getRotation();
+
+        switch (event.KeyInput.Key)
+        {
+          case KEY_ESCAPE:
+            exit(0);
+        case KEY_UP: // Avance
+          if  (position.X < -215 || position.X > 380) //coordonnés des portes dans les chambres annexes
+          {
+              if(position.Z > 35 || position.X < -620) //position des bords
+              {
+                  position.X += 0.5;  //evite de tomber dans le vide
+                  position.Z += -0.5;
+              }
+              else if (position.Z < -150)//position des bords
+              {
+                  position.Z += 0.5;
+              }
+              else if (position.X > 727) //position des bords
+              {
+                  position.X += -0.5;
+              }
+              else
+              {
+                  position.X += 2 * cos(rotation.Y * M_PI / 180.0);
+                  position.Z += -2 * sin(rotation.Y * M_PI / 180.0);
+                  isMoving +=1;
+              }
+          }
+          else
+          {
+              if (position.Z > 130) //Ne s'echappe pas par les escaliers
+              {
+                  position.Z += -0.5;
+
+              }
+              else if (position.Z < -260) //Ne s'echappe pas par les escaliers
+              {
+                  position.Z += 0.5;
+              }
+              else
+              {
+                  position.X += 2 * cos(rotation.Y * M_PI / 180.0);
+                  position.Z += -2 * sin(rotation.Y * M_PI / 180.0);
+                  isMoving +=1;
+              }
+
+          }
+          break;
+        case KEY_DOWN: // Recule
+          if  (position.X < -215 || position.X > 380)//condition pour ne pas tomber dans les chambres annexes
+          {
+              if(position.Z > 35 || position.X < -620)
+              {
+                  position.X += 0.5;
+                  position.Z += -0.5;
+              }
+              else if (position.Z < -150)
+              {
+                  position.Z += 0.5;
+              }
+              else if (position.X > 727)
+              {
+                  position.X += -0.5;
+              }
+              else
+              {
+                  position.X += -1 * cos(rotation.Y * M_PI / 180.0);
+                  position.Z += 1 * sin(rotation.Y * M_PI / 180.0);
+                  isMoving +=1;
+              }
+          }
+          else
+          {
+              if (position.Z > 130)
+              {
+                  position.Z += -0.5;
+              }
+              else if (position.Z < -260)
+              {
+                  position.Z += 0.5;
+              }
+              else
+              {
+                  position.X += -1 * cos(rotation.Y * M_PI / 180.0);
+                  position.Z += 1 * sin(rotation.Y * M_PI / 180.0);
+                  isMoving +=1;
+              }
+          }
+          break;
+          case KEY_RIGHT: // Tourne à droite
+            rotation.Y += 10;
+            break;
+          case KEY_LEFT: // Tourne à gauche
+            rotation.Y -= 10;
+            break;
+          default:;
+        }
+        node->setPosition(position);
+        node->setRotation(rotation);
+    }
 
   }
   if (!event.KeyInput.PressedDown)
@@ -152,6 +161,7 @@ bool EventReceiver::keyboard(const SEvent &event)
 
   return false;
 }
+
 
 /*------------------------------------------------------------------------*\
  * EventReceiver::mouse                                                   *
@@ -212,11 +222,76 @@ bool EventReceiver::gui_handler(const SEvent &event)
 //             std::cout <<"id:"<<id<< "Button clicked\n";
         {
             //if(code[0]== item_box)
-            std::cout <<"id: "<<*item_box<< "Button clicked\n";
+//            std::cout <<"id: "<<*item_box<< "Button clicked\n";
         }
         if (id == WINDOW_BUTTON_1)
         {
             std::cout <<"id:"<<id<< "Button clicked\n";
+            if (Fenetres_visible[0])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[0] = false;
+
+                Qmarks[0] -> setVisible(false);
+                Windows[0] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[1])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[1] = false;
+
+                Qmarks[1] -> setVisible(false);
+                Windows[1] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[2])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[2] = false;
+
+                Qmarks[2] -> setVisible(false);
+                Windows[2] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[3])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[3] = false;
+
+                Qmarks[3] -> setVisible(false);
+                Windows[3] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[4])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[4] = false;
+
+                Qmarks[4] -> setVisible(false);
+                Windows[4] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
             if (Fenetres_visible[5])
             {
                 std::cout <<"Bonne réponse"<<std::endl;
@@ -224,13 +299,17 @@ bool EventReceiver::gui_handler(const SEvent &event)
 
                 if (code.size() != 0)
                 {
-                    *position_it = code_images.size() - code.size();
+                    position_it = code_images.size() - code.size();
                     auto key = code.back();
                     code.pop_back();
-                    code_images[*position_it] -> setImage(digits_images[key]);
+                    code_images[position_it] -> setImage(digits_images[key]);
                 }
                 Qmarks[5] -> setVisible(false);
                 Windows[5] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
 
             }
         }
@@ -238,6 +317,58 @@ bool EventReceiver::gui_handler(const SEvent &event)
         if (id == WINDOW_BUTTON_2)
         {
             std::cout <<"id:"<<id<< "Button clicked\n";
+            if (Fenetres_visible[0])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[0] = false;
+
+                Qmarks[0] -> setVisible(false);
+                Windows[0] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[2])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[2] = false;
+
+                Qmarks[2] -> setVisible(false);
+                Windows[2] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[3])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[3] = false;
+
+                Qmarks[3] -> setVisible(false);
+                Windows[3] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[5])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[5] = false;
+
+                Qmarks[5] -> setVisible(false);
+                Windows[5] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
             if (Fenetres_visible[1])
             {
                 std::cout <<"Bonne réponse"<<std::endl;
@@ -245,11 +376,16 @@ bool EventReceiver::gui_handler(const SEvent &event)
 
                 if (code.size() != 0)
                 {
-                    *position_it = code_images.size() - code.size();
+                    position_it = code_images.size() - code.size();
                     auto key = code.back();
                     code.pop_back();
-                    code_images[*position_it] -> setImage(digits_images[key]);
+                    code_images[position_it] -> setImage(digits_images[key]);
                 }
+                Qmarks[1] -> setVisible(false);
+                Windows[1] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
 
 
             }
@@ -260,13 +396,18 @@ bool EventReceiver::gui_handler(const SEvent &event)
 
                 if (code.size() != 0)
                 {
-                    *position_it = code_images.size() - code.size();
+                    position_it = code_images.size() - code.size();
                     auto key = code.back();
                     code.pop_back();
-                    code_images[*position_it] -> setImage(digits_images[key]);
+                    code_images[position_it] -> setImage(digits_images[key]);
                 }
                 Qmarks[4] -> setVisible(false);
                 Windows[4] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
 
             }
 
@@ -276,6 +417,45 @@ bool EventReceiver::gui_handler(const SEvent &event)
         if (id == WINDOW_BUTTON_3)
         {
             std::cout <<"id:"<<id<< "Button clicked\n";
+            if (Fenetres_visible[0])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[0] = false;
+
+                Qmarks[0] -> setVisible(false);
+                Windows[0] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[1])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[1] = false;
+
+                Qmarks[1] -> setVisible(false);
+                Windows[1] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[2])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[2] = false;
+
+                Qmarks[2] -> setVisible(false);
+                Windows[2] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
             if (Fenetres_visible[3])
             {
                 std::cout <<"Bonne réponse"<<std::endl;
@@ -283,13 +463,43 @@ bool EventReceiver::gui_handler(const SEvent &event)
 
                 if (code.size() != 0)
                 {
-                    *position_it = code_images.size() - code.size();
+                    position_it = code_images.size() - code.size();
                     auto key = code.back();
                     code.pop_back();
-                    code_images[*position_it] -> setImage(digits_images[key]);
+                    code_images[position_it] -> setImage(digits_images[key]);
                 }
                 Qmarks[3] -> setVisible(false);
                 Windows[3] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[4])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[4] = false;
+
+                Qmarks[4] -> setVisible(false);
+                Windows[4] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[5])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[5] = false;
+
+                Qmarks[5] -> setVisible(false);
+                Windows[5] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
 
             }
         }
@@ -297,6 +507,59 @@ bool EventReceiver::gui_handler(const SEvent &event)
         if (id == WINDOW_BUTTON_4)
           {
             std::cout <<"id:"<<id<< "Button clicked\n";
+            if (Fenetres_visible[1])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[1] = false;
+
+                Qmarks[1] -> setVisible(false);
+                Windows[1] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[3])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[3] = false;
+
+                Qmarks[3] -> setVisible(false);
+                Windows[3] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[4])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[4] = false;
+
+                Qmarks[4] -> setVisible(false);
+                Windows[4] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+            }
+            if (Fenetres_visible[5])
+            {
+                std::cout <<"Mauvaise réponse"<<std::endl;
+                Fenetres_visible[5] = false;
+
+                Qmarks[5] -> setVisible(false);
+                Windows[5] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
+
+
+            }
             if (Fenetres_visible[0])
             {
                 std::cout <<"Bonne réponse"<<std::endl;
@@ -304,13 +567,17 @@ bool EventReceiver::gui_handler(const SEvent &event)
 
                 if (code.size() != 0)
                 {
-                    *position_it = code_images.size() - code.size();
+                    position_it = code_images.size() - code.size();
                     auto key = code.back();
                     code.pop_back();
-                    code_images[*position_it] -> setImage(digits_images[key]);
+                    code_images[position_it] -> setImage(digits_images[key]);
                 }
                 Qmarks[0] -> setVisible(false);
                 Windows[0] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
 
             }
             else if (Fenetres_visible[2])
@@ -320,17 +587,18 @@ bool EventReceiver::gui_handler(const SEvent &event)
 
                 if (code.size() != 0)
                 {
-                    *position_it = code_images.size() - code.size();
+                    position_it = code_images.size() - code.size();
                     auto key = code.back();
                     code.pop_back();
-                    code_images[*position_it] -> setImage(digits_images[key]);
+                    code_images[position_it] -> setImage(digits_images[key]);
                 }
-
-//                timer_images[0]->setImage(digits_images[0]);
-//                timer_images[1]->setImage(digits_images[0]);
 
                 Qmarks[2] -> setVisible(false);
                 Windows[2] -> setVisible(false);
+                nbr_quest_pass += 1;
+                if (Qmarks.size() - nbr_quest_pass < code.size())
+                    std::cout << "GAME OVER" <<std::endl;
+
             }
           }
 
@@ -344,9 +612,8 @@ bool EventReceiver::gui_handler(const SEvent &event)
         {
           ig::IGUIComboBox *cbox = (ig::IGUIComboBox*)event.GUIEvent.Caller;
           int item = cbox->getSelected();
-          item_box = &item;
           u32 elem_id = cbox->getItemData(item);
-          std::cout << "Combo box changed: item " << *item_box << ", id " << elem_id << std::endl;
+          std::cout << "Combo box changed: item " << item << ", id " << elem_id << std::endl;
         }
         if (id == WINDOW_COMBO_BOX_2)
         {
@@ -452,13 +719,6 @@ void EventReceiver::set_code_images(std::vector<irr::gui::IGUIImage*> CI)
   code_images = CI ;
 }
 
-/**************************************************************************\
- * EventReceiver::set_timer_images                                            *
-\**************************************************************************/
-void EventReceiver::set_timer_images(std::vector<irr::gui::IGUIImage*> TI)
-{
-  timer_images = TI ;
-}
 
 /**************************************************************************\
  * EventReceiver::set_digit_images                                            *
@@ -467,3 +727,4 @@ void EventReceiver::set_digits_images(std::vector<irr::video::ITexture*> DI)
 {
   digits_images = DI ;
 }
+

@@ -142,10 +142,6 @@ int main()
   ig::IGUIImage *timer_1     = gui->addImage(ic::rect<s32>(90,10, 130,50)); timer_1->setScaleImage(true);
 
 
-  // variables des images du timer à passer à la fonction event.cpp
-  std::vector<ig::IGUIImage*> timer_images;
-  timer_images.push_back(timer_10),  timer_images.push_back(timer_10);
-  receiver.set_timer_images(timer_images);
 
   //Initialisation de la caméra
   is::ICameraSceneNode *cam = smgr->addCameraSceneNode(perso, ic::vector3df(-60, 30, 0), ic::vector3df(0, 5, 0));
@@ -305,9 +301,7 @@ int main()
 
 
 
-  //flags affichage de la fenêtre aprés fin du temps imparti
-  bool check1 = true, check2 = true,check3 = true,
-        check4 = true, check5 = true, check6 = true;
+
 
 
   while(device->run())
@@ -347,17 +341,13 @@ int main()
         }
     }
 
-    Fenetres_visible[0] = *cpt_QMark1, Fenetres_visible[1] = *cpt_QMark2, Fenetres_visible[2] = *cpt_QMark3,
-    Fenetres_visible[3] = *cpt_QMark4, Fenetres_visible[4] = *cpt_QMark5, Fenetres_visible[5] = *cpt_QMark6;
-    receiver.set_Fenetres_visible(Fenetres_visible);
 
-    timer_images.push_back(timer_10),  timer_images.push_back(timer_10);
-    receiver.set_timer_images(timer_images);
+
 
     //Si le temps imparti n'est pas terminé
     if (*visible_QMark1)
     {
-        check1 = interaction_perso_QMark (QMark1, perso,visible_QMark1,
+        interaction_perso_QMark (QMark1, perso,visible_QMark1,
                                  fenetre_QMark1, cpt_QMark1,timer_10,timer_1,
                                   window_enigme_QMark1, driver);
     }
@@ -365,41 +355,43 @@ int main()
 
     if (*visible_QMark2)
     {
-        check2 = interaction_perso_QMark (QMark2, perso,visible_QMark2,
+        interaction_perso_QMark (QMark2, perso,visible_QMark2,
                                  fenetre_QMark2, cpt_QMark2,timer_10,timer_1,
                                   window_enigme_QMark2, driver);
     }
 
     if (*visible_QMark3)
     {
-        check3 = interaction_perso_QMark (QMark3, perso,visible_QMark3,
+        interaction_perso_QMark (QMark3, perso,visible_QMark3,
                                  fenetre_QMark3, cpt_QMark3,timer_10,timer_1,
                                   window_enigme_QMark3, driver);
     }
 
     if (*visible_QMark4)
     {
-        check4 = interaction_perso_QMark (QMark4, perso,visible_QMark4,
+        interaction_perso_QMark (QMark4, perso,visible_QMark4,
                                  fenetre_QMark4, cpt_QMark4,timer_10,timer_1,
                                   window_enigme_QMark4, driver);
     }
 
     if (*visible_QMark5)
     {
-        check5 = interaction_perso_QMark (QMark5, perso,visible_QMark5,
+        interaction_perso_QMark (QMark5, perso,visible_QMark5,
                                  fenetre_QMark5, cpt_QMark5,timer_10,timer_1,
                                   window_enigme_QMark5, driver);
     }
 
     if (*visible_QMark6)
     {
-        check6 = interaction_perso_QMark (QMark6, perso,visible_QMark6,
+        interaction_perso_QMark (QMark6, perso,visible_QMark6,
                                  fenetre_QMark6, cpt_QMark6,timer_10,timer_1,
                                   window_enigme_QMark6, driver);
     }
 
 
-
+    Fenetres_visible[0] = *fenetre_QMark1, Fenetres_visible[1] = *fenetre_QMark2, Fenetres_visible[2] = *fenetre_QMark3,
+    Fenetres_visible[3] = *fenetre_QMark4, Fenetres_visible[4] = *fenetre_QMark5, Fenetres_visible[5] = *fenetre_QMark6;
+    receiver.set_Fenetres_visible(Fenetres_visible);
 
 
     // Dessin de la scène :
